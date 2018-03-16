@@ -8,3 +8,4 @@
 /installer/tmp
 
 erl_crash.dump
+.babelrc
