@@ -250,6 +250,14 @@ defmodule Phoenix.Channel.Server do
     {:reply, socket, socket}
   end
 
+  def handle_call(msg, from, %{channel: channel} = socket) do
+    if function_exported?(channel, :handle_call, 3) do
+      socket.channel.handle_call(msg, from, socket)
+    else
+      {:reply, {:error, :not_export}, socket}
+    end
+  end
+
   @doc false
   def handle_cast(:close, socket) do
     {:stop, {:shutdown, :closed}, socket}
